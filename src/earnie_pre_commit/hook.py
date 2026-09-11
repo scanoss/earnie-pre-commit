@@ -16,7 +16,7 @@ def main(argv: list[str] | None = None) -> int:
     if args == ["--install-binary"]:
         print(binary)
         return 0
-    os.execv(binary, [binary, "scan", "staged", "--format", "hook"])
+    os.execv(binary, [binary, "scan", "staged", *args, "--format", "hook"])
     return 1
 
 
