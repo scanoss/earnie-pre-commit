@@ -118,7 +118,35 @@ class AcquireTests(unittest.TestCase):
                     execv.side_effect = SystemExit(0)
                     with self.assertRaises(SystemExit):
                         hook_mod.main([])
-            execv.assert_called_once_with(str(fake), [str(fake), "scan", "staged", "--format", "hook"])
+            execv.assert_called_once_with(
+                str(fake), [str(fake), "scan", "staged", "--format", "hook"]
+            )
+
+    def test_hook_forwards_pre_commit_args_before_format_hook(self):
+        from earnie_pre_commit import hook as hook_mod
+
+        with tempfile.TemporaryDirectory() as directory:
+            fake = pathlib.Path(directory) / "earnie"
+            fake.write_text("#!/bin/sh\n")
+            fake.chmod(0o755)
+            with mock.patch.object(hook_mod, "ensure_binary", return_value=str(fake)):
+                with mock.patch.object(hook_mod.os, "execv") as execv:
+                    execv.side_effect = SystemExit(0)
+                    with self.assertRaises(SystemExit):
+                        hook_mod.main(["--project", "billing", "--quiet"])
+            execv.assert_called_once_with(
+                str(fake),
+                [
+                    str(fake),
+                    "scan",
+                    "staged",
+                    "--project",
+                    "billing",
+                    "--quiet",
+                    "--format",
+                    "hook",
+                ],
+            )
 
 
 def _tar_gz_with_script(script: str) -> bytes:

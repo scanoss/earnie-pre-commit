@@ -44,14 +44,52 @@ commit scans the Git index.
 | `require` | Exit 0 with an approval notice |
 | Technical failure | Fail-open unless the Project sets fail-closed, or `EARNIE_HOOK_FAIL_CLOSED=1` |
 
+## Configuration
+
+pre-commit appends `args` to the hook entry. This wrapper forwards those
+arguments to the pinned CLI and keeps `--format hook` last, so the hook
+identity cannot be overridden. Environment variables are inherited. Do not put
+API keys in `.pre-commit-config.yaml`.
+
+```yaml
+repos:
+  - repo: https://github.com/scanoss/earnie-pre-commit
+    rev: v0.1.1
+    hooks:
+      - id: earnie
+        args: ["--project", "billing", "--quiet"]
+```
+
+| Mechanism | Purpose |
+| --- | --- |
+| `args: ["--project", "<slug-or-uuid>"]` | Pin the Project when git remotes are unbound or a repo maps to more than one Project. Beats `EARNIE_PROJECT`, which beats the git remote |
+| `args: ["--api-url", "<url>"]` or `EARNIE_API_URL` | Tenant URL, including CI machines without `~/.config/earnie` |
+| `EARNIE_API_KEY` | CI only. Never commit it. Locally use `earnie auth login` / the OS keychain |
+| `EARNIE_HOOK_FAIL_CLOSED=1` | Local stricter-only override. The Project setting is the real control |
+| `args: ["--quiet"]`, `["--color", "never"]`, `["--no-update-check"]` | Reduce log noise |
+| `EARNIE_PRE_COMMIT_CACHE` | Directory for the downloaded pinned binary |
+| `SKIP=earnie`, `stages`, `rev` | pre-commit built-ins |
+
+Leave these alone:
+
+| Must stay fixed | Why |
+| --- | --- |
+| `scan staged --format hook` | That command is the hook. `--format` in `args` is ignored because the wrapper appends `--format hook` last |
+| `--json`, `--no-wait` | The CLI rejects both with hook format |
+| CLI version | Pin `rev` to a wrapper tag. The lockfile inside that tag is the CLI pin |
+
+`--timeout` on `scan staged` does not change the hook wait bound (60s). Use
+the Project fail-closed setting, not a longer local wait, when a scan must not
+fail open.
+
+Native Git hook without the pre-commit framework: `earnie hook install`. That
+path does not take these `args`; set environment variables instead.
+
 ## Details
 
 - Platforms: Linux and macOS amd64/arm64, Windows amd64.
 - Cache: `~/.cache/earnie-pre-commit/` (or `%LOCALAPPDATA%\earnie-pre-commit\` on
   Windows). Override with `EARNIE_PRE_COMMIT_CACHE`.
-- Auth, API URL, and Project selection are the same as the normal CLI
-  (`earnie auth login`, `EARNIE_API_URL`, `EARNIE_PROJECT`).
-- Native Git hook without the pre-commit framework: `earnie hook install`.
 
 ## Troubleshooting
 
