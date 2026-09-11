@@ -7,9 +7,6 @@ release. It downloads that exact CLI, verifies its SHA-256, and runs:
 earnie scan staged --format hook
 ```
 
-It does not ship Earnie source. The CLI itself comes from
-[scanoss/earnie-cli](https://github.com/scanoss/earnie-cli/releases).
-
 ## Quick path
 
 1. Install and authenticate the Earnie CLI once (`earnie auth login`), or let
