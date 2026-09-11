@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "earnie-pre-commit"
+version = "0.1.1"
+description = "pre-commit hook that runs a pinned signed Earnie CLI against the Git index"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "SCANOSS" }]
+urls = { Homepage = "https://github.com/scanoss/earnie-pre-commit" }
+
+[project.scripts]
+earnie-pre-commit = "earnie_pre_commit.hook:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+earnie_pre_commit = ["release-lock.json"]

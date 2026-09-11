@@ -1,0 +1,9 @@
+- id: earnie
+  name: Earnie
+  description: Run earnie scan staged --format hook against the Git index
+  entry: earnie-pre-commit
+  language: python
+  pass_filenames: false
+  always_run: true
+  require_serial: true
+  verbose: true
