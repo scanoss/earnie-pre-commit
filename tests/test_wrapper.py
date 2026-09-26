@@ -5,24 +5,34 @@ import os
 import pathlib
 import tarfile
 import tempfile
+import tomllib
 import unittest
 from unittest import mock
 
+import earnie_pre_commit
 from earnie_pre_commit.lock import SUPPORTED, archive_for, current_platform, load_lock
 
 
+PYPROJECT = pathlib.Path(__file__).resolve().parents[1] / "pyproject.toml"
+
+
 class LockTests(unittest.TestCase):
-    def test_lock_pins_cli_0_1_1_with_five_archives(self):
+    def test_lock_pins_the_package_version_with_five_archives(self):
+        # The CLI release workflow bumps the lock, pyproject and __version__
+        # together, so the test reads the version rather than naming one.
         lock = load_lock()
-        self.assertEqual("0.1.1", lock["version"])
+        version = earnie_pre_commit.__version__
+        pyproject = tomllib.loads(PYPROJECT.read_text())
+        self.assertEqual(version, pyproject["project"]["version"])
+        self.assertEqual(version, lock["version"])
         self.assertEqual(
-            "https://github.com/scanoss/earnie-cli/releases/download/v0.1.1",
+            f"https://github.com/scanoss/earnie-cli/releases/download/v{version}",
             lock["release_base_url"],
         )
         self.assertEqual(set(SUPPORTED), set(lock["archives"]))
         for name in SUPPORTED:
             archive = archive_for(lock, name)
-            self.assertIn(f"earnie_0.1.1_{name}.", archive["name"])
+            self.assertIn(f"earnie_{version}_{name}.", archive["name"])
             self.assertEqual(64, len(archive["sha256"]))
 
     def test_current_platform_maps_common_names(self):
