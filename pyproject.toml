@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "earnie-pre-commit"
-version = "0.2.3"
+version = "0.3.0"
 description = "pre-commit hook that runs a pinned signed Earnie CLI against the Git index"
 readme = "README.md"
 requires-python = ">=3.9"
