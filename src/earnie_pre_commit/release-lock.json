@@ -1,26 +1,26 @@
 {
-  "version": "0.6.0",
-  "release_base_url": "https://github.com/scanoss/earnie-cli/releases/download/v0.6.0",
+  "version": "0.7.0",
+  "release_base_url": "https://github.com/scanoss/earnie-cli/releases/download/v0.7.0",
   "archives": {
     "darwin_amd64": {
-      "name": "earnie_0.6.0_darwin_amd64.tar.gz",
-      "sha256": "f68a38a3a36d45b2c9a04ab756f7e8f623b308f95ff181d48becc5fb879c9634"
+      "name": "earnie_0.7.0_darwin_amd64.tar.gz",
+      "sha256": "e4a78e1f6eafc78af55e7459d10cafb6dbbc7fbf1c130456159b2df77f79d061"
     },
     "darwin_arm64": {
-      "name": "earnie_0.6.0_darwin_arm64.tar.gz",
-      "sha256": "5743f11c1016ded28976b2f435a2ab8e208ef749d0433afa01e8fc5333ea9728"
+      "name": "earnie_0.7.0_darwin_arm64.tar.gz",
+      "sha256": "02fee932c065d89f548a14d2a777349e048c34692fe3f62ed2ed6d2e90c8c12c"
     },
     "linux_amd64": {
-      "name": "earnie_0.6.0_linux_amd64.tar.gz",
-      "sha256": "d6541cf407367bb7d5aa72857f18f94498f47294ea5afe28f792b81b7ab83717"
+      "name": "earnie_0.7.0_linux_amd64.tar.gz",
+      "sha256": "22b1dd4c7dbeb0dd94e1602f1223c0352a12017e3e4099285fe42c6b7921324f"
     },
     "linux_arm64": {
-      "name": "earnie_0.6.0_linux_arm64.tar.gz",
-      "sha256": "542bd81d9a452cabd6ce17485a943cd7113f6877f8d76959e33a7955bf8439b8"
+      "name": "earnie_0.7.0_linux_arm64.tar.gz",
+      "sha256": "967b240dedb63446e2df91a8f45e324a0ba2f107931a923b7be8c0f303420c46"
     },
     "windows_amd64": {
-      "name": "earnie_0.6.0_windows_amd64.zip",
-      "sha256": "04281a2046f1b226a852c3b995bd1e7cceb5266f43c60c0cac34b719dfc0978b"
+      "name": "earnie_0.7.0_windows_amd64.zip",
+      "sha256": "ba4ecb3079e8cf86159955ee2285d2d11ab6b26cd7e464d66cbba9da078dc38a"
     }
   }
 }
